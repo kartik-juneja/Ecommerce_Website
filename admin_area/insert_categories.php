@@ -2,11 +2,23 @@
 include('../includes/connect.php');
 if(isset($_POST['insert_cat'])){
   $category_title = $_POST['cat_title'];
+  //selecting data from database
+  $select_query ="select * from `categories` where category_title='$category_title'";
+  $result_select = mysqli_query($con,$select_query);
+  $numrows = mysqli_num_rows($result_select);
+  if($numrows>0){
+
+    echo "<script>alert('Category is already in database')</script>";
+  }
+  else{
+
   $insert_query = "insert into `categories` (category_title) values ('$category_title')";
   $result = mysqli_query($con,$insert_query);
+
   if($result){
-    echo "<script>alert(Category has been added')</script>";
+    echo "<script>alert('Category has been added')</script>";
   }
+}
 }
 ?>
 
